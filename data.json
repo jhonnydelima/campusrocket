@@ -1,0 +1,34 @@
+{
+  "teachers": [
+    {
+      "id": 1,
+      "avatar_url": "http://google.com",
+      "name": "Test",
+      "birth": 1612137600000,
+      "educational_level": "ensino medio",
+      "class_type": "presencial",
+      "occupation_area": "Matemática",
+      "created_at": 1614104035473
+    },
+    {
+      "id": 2,
+      "avatar_url": "http://google.com",
+      "name": "asdf",
+      "birth": 1613001600000,
+      "educational_level": "ensino superior",
+      "class_type": "distancia",
+      "occupation_area": "Cálculo 1",
+      "created_at": 1614104112023
+    },
+    {
+      "id": 3,
+      "avatar_url": "http://google.com",
+      "name": "Professor",
+      "birth": 660960000000,
+      "educational_level": "mestrado",
+      "class_type": "distancia",
+      "occupation_area": "Programação",
+      "created_at": 1614104170491
+    }
+  ]
+}
