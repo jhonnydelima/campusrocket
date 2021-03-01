@@ -1,0 +1,63 @@
+<div class="item">
+    <div>Avatar URL</div>
+    <div>
+        <input type="url" name="avatar_url" placeholder="http://..." value="{{ teacher.avatar_url }}">
+    </div>
+</div>
+
+<div class="item">
+    <div>Professor(a)</div>
+    <div>
+        <input type="text" name="name" placeholder="Nome do professor" value="{{ teacher.name }}">
+    </div>
+</div>
+
+<div class="item">
+    <div>Data de nascimento</div>
+    <div>
+        <input type="date" name="birth" value="{{ teacher.birth }}">
+    </div>
+</div>
+
+<div class="item">
+    <div>Grau de escolaridade</div>
+    <div>
+        <select name="educational_level">
+            <option value="medio" {% if teacher.educational_level == 'medio' %} selected="selected" {% endif %}>
+                Ensino Médio Completo
+            </option>
+            <option value="superior" {% if teacher.educational_level == 'superior' %} selected="selected" {% endif %}>
+                Ensino Superior Completo
+            </option>
+            <option value="mestrado" {% if teacher.educational_level == 'mestrado' %} selected="selected" {% endif %}>
+                Mestrado
+            </option>
+            <option value="doutorado" {% if teacher.educational_level == 'doutorado' %} selected="selected" {% endif %}>
+                Doutorado
+            </option>
+        </select>
+    </div>
+</div>
+
+<div class="item">
+    <div>Tipo de aula</div>
+    <div>
+        <span>
+            <input type="radio" name="class_type" value="presencial" {% if teacher.class_type == 'presencial' %} checked="checked" {% endif %}>
+            Presencial
+        </span>
+        <span>
+            <input type="radio" name="class_type" value="distancia" {% if teacher.class_type == 'distancia' %} checked="checked" {% endif %}>
+            À distância
+        </span>
+    </div>
+</div>
+
+<div class="item">
+    <div>Área de atuação</div>
+    <div>
+        <input type="text" name="occupation_area" placeholder="Separe as áreas de atuação com ',' (vírgula)" value="{{ teacher.occupation_area }}">
+    </div>
+</div>
+
+<button type="submit">Salvar</button>
