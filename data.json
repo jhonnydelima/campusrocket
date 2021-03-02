@@ -1,23 +1,13 @@
 {
   "teachers": [
     {
-      "id": 1,
-      "avatar_url": "https://source.unsplash.com/collection/4852103/500x500",
-      "name": "Test",
-      "birth": 1612137600000,
-      "educational_level": "medio",
-      "class_type": "presencial",
-      "occupation_area": "Matemática",
-      "created_at": 1614104035473
-    },
-    {
       "id": 2,
       "avatar_url": "https://source.unsplash.com/collection/4852103/500x500",
-      "name": "asdf",
-      "birth": 1613001600000,
-      "educational_level": "superior",
-      "class_type": "distancia",
-      "occupation_area": "Cálculo 1",
+      "name": "Teacher02",
+      "birth": -312076800000,
+      "educational_level": "doutorado",
+      "class_type": "presencial",
+      "occupation_area": "Cálculo 1, Álgebra Linear",
       "created_at": 1614104112023
     },
     {

@@ -75,7 +75,60 @@ exports.edit = (req, res) => {
     const teacher = {
         ...foundTeacher,
         birth: date(foundTeacher.birth),
-    }
+    };
 
     return res.render('teachers/edit', { teacher });
+}
+
+// update
+exports.update = (req, res) => {
+    const { id } = req.body;
+    let index = 0;
+
+    const foundTeacher = data.teachers.find((teacher, foundIndex) => {
+        if (teacher.id == id) {
+            index = foundIndex;
+            return true;
+        }
+    });
+
+    if (!foundTeacher) {
+        return res.send("Teacher not found!");
+    }
+
+    const teacher = {
+        ...foundTeacher,
+        ...req.body,
+        id: Number.parseInt(req.body.id),
+        birth: Date.parse(req.body.birth)
+    };
+
+    data.teachers[index] = teacher;
+
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
+        if (err) {
+            return res.send("Write file error!");
+        }
+
+        return res.redirect(`/teachers/${id}`);
+    });
+}
+
+// delete
+exports.delete = (req, res) => {
+    const { id } = req.body;
+
+    const filteredTeachers = data.teachers.filter(teacher => {
+        return teacher.id != id;
+    });
+
+    data.teachers = filteredTeachers;
+
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
+        if (err) {
+            return res.send("Write file error!");
+        }
+
+        return res.redirect('/teachers');
+    })
 }
