@@ -2,6 +2,22 @@ const fs = require('fs');
 const data = require('./data.json');
 const { age, graduation, classType, date } = require('./utils');
 
+// index
+exports.index = (req, res) => {
+    let teachers = [];
+
+    for (let teacher of data.teachers) {
+        const newTeacher = {
+            ...teacher,
+            occupation_area: teacher.occupation_area.split(",")
+        };
+
+        teachers.push(newTeacher);
+    }
+
+    return res.render("teachers/index", { teachers });
+}
+
 // create
 exports.post = (req, res) => {
     const keys = Object.keys(req.body)
@@ -105,7 +121,7 @@ exports.update = (req, res) => {
 
     data.teachers[index] = teacher;
 
-    fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
         if (err) {
             return res.send("Write file error!");
         }
@@ -124,7 +140,7 @@ exports.delete = (req, res) => {
 
     data.teachers = filteredTeachers;
 
-    fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
         if (err) {
             return res.send("Write file error!");
         }
