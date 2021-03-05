@@ -1,8 +1,7 @@
 const fs = require('fs');
-const data = require('./data.json');
-const { age, graduation, classType, date } = require('./utils');
+const data = require('../data.json');
+const { age, graduation, classType, date } = require('../utils');
 
-// index
 exports.index = (req, res) => {
     let teachers = [];
 
@@ -18,41 +17,41 @@ exports.index = (req, res) => {
     return res.render("teachers/index", { teachers });
 }
 
-// create
+exports.create = (req, res) => {
+    return res.render("teachers/create");
+}
+
 exports.post = (req, res) => {
-    const keys = Object.keys(req.body)
+    const keys = Object.keys(req.body);
 
     for (key of keys) {
         if (req.body[key] == "") {
-            return res.send("Please, fill all the fields!")
+            return res.send("Please, fill all the fields!");
         }
     }
 
-    let { avatar_url, name, birth, educational_level, class_type, occupation_area } = req.body
+    // let { avatar_url, name, birth, educational_level, class_type, occupation_area } = req.body
 
-    birth = Date.parse(birth)
-    const id = Number(data.teachers.length + 1)
-    const created_at = Date.now()
+    const lastTeacher = data.teachers[data.teachers.length - 1];
+    const id = lastTeacher ? lastTeacher.id + 1 : 1;
+
+    const birth = Date.parse(req.body.birth);
+    const created_at = Date.now();
 
     data.teachers.push({
         id,
-        avatar_url,
-        name,
+        ...req.body,
         birth,
-        educational_level,
-        class_type,
-        occupation_area,
         created_at
-    })
+    });
 
     fs.writeFile("data.json", JSON.stringify(data, null, 2), function (err) {
-        if (err) return res.send("Write file error!")
+        if (err) return res.send("Write file error!");
 
-        return res.redirect("/teachers")
-    })
+        return res.redirect("/teachers");
+    });
 }
 
-// show
 exports.show = (req, res) => {
     const { id } = req.params;
 
@@ -76,7 +75,6 @@ exports.show = (req, res) => {
     return res.render('teachers/show', { teacher });
 }
 
-// edit
 exports.edit = (req, res) => {
     const { id } = req.params;
 
@@ -90,13 +88,12 @@ exports.edit = (req, res) => {
 
     const teacher = {
         ...foundTeacher,
-        birth: date(foundTeacher.birth),
+        birth: date(foundTeacher.birth).iso,
     };
 
     return res.render('teachers/edit', { teacher });
 }
 
-// update
 exports.update = (req, res) => {
     const { id } = req.body;
     let index = 0;
@@ -130,7 +127,6 @@ exports.update = (req, res) => {
     });
 }
 
-// delete
 exports.delete = (req, res) => {
     const { id } = req.body;
 

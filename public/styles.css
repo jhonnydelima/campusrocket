@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #111010ea;
-  --secondary-color: #df6f06;
+  --secondary-color: #ef9846;
   --tertiary--color: #777;
   --alternative-yellow: #F7DF1E;
 }
@@ -164,12 +164,17 @@ input::placeholder {
 }
 
 select {
-  background-color: var(--tertiary--color);
+  background-color: rgba(119, 119, 119, 0.738);
+
+  width: 100%;
 
   border-radius: 4px;
   padding: 4px 8px;
 
   color: white;
+  font-size: 16px;
+
+  outline: none;
 }
 
 input[type="radio"] {
@@ -202,7 +207,7 @@ a.button {
 }
 
 #form-delete button[type="submit"] {
-  background-color: rgb(203, 81, 81);
+  background-color: rgb(209, 68, 68);
   cursor: pointer;
   margin-top: 8px;
 }
@@ -255,7 +260,8 @@ tbody tr td:first-child span {
   box-shadow: 3px 3px 8px -2px black;
 }
 
-tbody tr td:last-child a {
+tbody tr td:last-child a,
+.table-container > a {
   background-color: var(--secondary-color);
 
   color: white;
@@ -265,4 +271,9 @@ tbody tr td:last-child a {
 
   border-radius: 4px;
   padding: 8px 16px;
+}
+
+.table-container > a {
+  display: inline-block;
+  margin-bottom: 8px;
 }

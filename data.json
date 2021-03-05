@@ -1,4 +1,33 @@
 {
+  "students": [
+    {
+      "id": 1,
+      "avatar_url": "https://images.unsplash.com/photo-1529470839332-78ad660a6a82?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjB8fHN0dWRlbnR8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "name": "StudentEdited",
+      "email": "student.edited@gmail.com",
+      "birth": 1107216000000,
+      "grade": "2EM",
+      "weekly_workload": "5"
+    },
+    {
+      "id": 2,
+      "avatar_url": "https://images.unsplash.com/photo-1517256673644-36ad11246d21?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjJ8fHN0dWRlbnR8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "name": "Student02",
+      "email": "student02@gmail.com",
+      "birth": 1148083200000,
+      "grade": "1EM",
+      "weekly_workload": "6"
+    },
+    {
+      "id": 4,
+      "avatar_url": "https://images.unsplash.com/photo-1547082661-71362fc3969c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Nzd8fHN0dWRlbnR8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "name": "Student04",
+      "email": "student04@gmail.com",
+      "birth": 1317945600000,
+      "grade": "5EF",
+      "weekly_workload": "20"
+    }
+  ],
   "teachers": [
     {
       "id": 2,
@@ -29,6 +58,16 @@
       "class_type": "presencial",
       "occupation_area": "História, Geografia",
       "created_at": 1614550149608
+    },
+    {
+      "id": 5,
+      "avatar_url": "https://images.unsplash.com/photo-1587403655231-b1734312903f?ixid=MXwxMjA3fDB8MHxzZWFyY2h8OTF8fHRlYWNoZXJ8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+      "name": "Teacher03",
+      "birth": 665366400000,
+      "educational_level": "superior",
+      "class_type": "distancia",
+      "occupation_area": "Fotografia",
+      "created_at": 1614909545294
     }
   ]
 }
