@@ -26,13 +26,13 @@
 
             <div class="item">
                 <div>Tipo de aula</div>
-                <div>{{ teacher.class_type }}</div>
+                <div>{{ teacher.classType }}</div>
             </div>
 
             <div class="item">
                 <div>Disciplinas</div>
                 <div>
-                    {% for subject in teacher.occupation_area %}
+                    {% for subject in teacher.subjects_taught %}
                         <span>{{ subject }}</span>
                     {% endfor %}
                 </div>
