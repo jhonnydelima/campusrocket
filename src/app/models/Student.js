@@ -22,8 +22,9 @@ module.exports = {
                 email,
                 birth,
                 grade,
-                weekly_workload
-            ) VALUES ($1, $2, $3, $4, $5, $6)
+                weekly_workload,
+                teacher_id
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id
         `;
 
@@ -33,7 +34,8 @@ module.exports = {
             data.email,
             date(data.birth).iso,
             data.grade,
-            data.weekly_workload
+            data.weekly_workload,
+            data.teacher
         ];
 
         db.query(query, values, function (err, results) {
@@ -44,9 +46,11 @@ module.exports = {
     },
     find(id, callback) {
         db.query(`
-            SELECT *
+            SELECT students.*, teachers.name AS teacher_name
             FROM students
-            WHERE id = $1`,
+            LEFT JOIN teachers
+            ON teachers.id = students.teacher_id
+            WHERE students.id = $1`,
             [id], function (err, results) {
                 if (err) { throw `Database error! ${err}`; }
 
@@ -62,8 +66,9 @@ module.exports = {
                 email = ($3),
                 birth = ($4),
                 grade = ($5),
-                weekly_workload = ($6)
-            WHERE id = $7
+                weekly_workload = ($6),
+                teacher_id = ($7)
+            WHERE id = $8
         `;
 
         const values = [
@@ -73,6 +78,7 @@ module.exports = {
             date(data.birth).iso,
             data.grade,
             data.weekly_workload,
+            data.teacher,
             data.id
         ];
 
@@ -90,6 +96,18 @@ module.exports = {
                 if (err) { throw `Database error! ${err}`; }
 
                 callback();
+            }
+        );
+    },
+    teacherSelectOptions(callback) {
+        db.query(`
+            SELECT id, name
+            FROM teachers
+            ORDER BY name ASC`,
+            function (err, results) {
+                if (err) { throw `Database error! ${err}`; }
+
+                callback(results.rows);
             }
         );
     }

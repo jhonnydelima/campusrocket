@@ -8,7 +8,9 @@ module.exports = {
         });
     },
     create(req, res) {
-        return res.render("students/create");
+        Student.teacherSelectOptions(function(teacherOptions) {
+            return res.render("students/create", { teacherOptions });
+        });
     },
     post(req, res) {
         const keys = Object.keys(req.body);
@@ -43,7 +45,9 @@ module.exports = {
 
             student.birth = date(student.birth).iso;
 
-            return res.render("students/edit", { student });
+            Student.teacherSelectOptions(function (teacherOptions) {
+                return res.render("students/edit", { student, teacherOptions });
+            });
         });
     },
     update(req, res) {

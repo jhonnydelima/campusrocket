@@ -4,9 +4,12 @@ const { date } = require("../../lib/utils");
 module.exports = {
     all(callback) {
         db.query(`
-            SELECT *
-            FROM teachers
-            ORDER BY name ASC`,
+            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, count(s) AS total_students
+            FROM teachers t
+            LEFT JOIN students s
+            ON s.teacher_id = t.id
+            GROUP BY t.id
+            ORDER BY total_students DESC`,
             function (err, results) {
                 if (err) { throw `Database error! ${err}`; }
 
@@ -53,6 +56,23 @@ module.exports = {
                 if (err) { throw `Database error! ${err}`; }
 
                 callback(results.rows[0]);
+            }
+        );
+    },
+    findBy(filter, callback) {
+        db.query(`
+            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, count(s) AS total_students
+            FROM teachers t
+            LEFT JOIN students s
+            ON s.teacher_id = t.id
+            WHERE t.name ILIKE '%${filter}%'
+            OR t.subjects_taught ILIKE '%${filter}%'
+            GROUP BY t.id
+            ORDER BY total_students DESC`,
+            function (err, results) {
+                if (err) { throw `Database error! ${err}`; }
+
+                callback(results.rows);
             }
         );
     },

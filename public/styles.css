@@ -277,3 +277,33 @@ tbody tr td:last-child a,
   display: inline-block;
   margin-bottom: 8px;
 }
+
+/* === FILTERS === */
+.table-container .header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.table-container .header a {
+  margin: 0;
+  width: 100px;
+}
+
+.table-container .header form {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-container .header form input {
+  border: 1px solid #eee;
+  padding: 8px 8px;
+  box-sizing: border-box;
+}
+
+.table-container .header form button {
+  margin: 0;
+}
