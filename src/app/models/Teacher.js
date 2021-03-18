@@ -4,7 +4,7 @@ const { date } = require("../../lib/utils");
 module.exports = {
     all(callback) {
         db.query(`
-            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, count(s) AS total_students
+            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, COUNT(s) AS total_students
             FROM teachers t
             LEFT JOIN students s
             ON s.teacher_id = t.id
@@ -61,7 +61,7 @@ module.exports = {
     },
     findBy(filter, callback) {
         db.query(`
-            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, count(s) AS total_students
+            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, COUNT(s) AS total_students
             FROM teachers t
             LEFT JOIN students s
             ON s.teacher_id = t.id
@@ -114,5 +114,43 @@ module.exports = {
                 callback();
             }
         );
+    },
+    paginate(params) {
+        const { filter, limit, offset, callback } = params;
+
+        let query = "",
+            filterQuery = "",
+            totalQuery = `(
+                SELECT COUNT(*) FROM teachers
+            ) AS total`;
+
+        if (filter) {
+            filterQuery = `
+                WHERE t.name ILIKE '%${filter}%'
+                OR t.subjects_taught ILIKE '%${filter}%'
+            `;
+
+            totalQuery = `(
+                SELECT COUNT(*) FROM teachers
+                ${filterQuery}
+            ) AS total`;
+        }
+
+        query = `
+            SELECT t.id, t.avatar_url, t.name, t.subjects_taught, ${totalQuery}, COUNT(s) AS total_students
+            FROM teachers t
+            LEFT JOIN students s
+            ON s.teacher_id = t.id
+            ${filterQuery}
+            GROUP BY t.id
+            ORDER BY total_students DESC
+            LIMIT $1 OFFSET $2
+        `;
+
+        db.query(query, [limit, offset], function (err, results) {
+            if (err) { throw `Database error! ${err}`; }
+
+            callback(results.rows);
+        });
     }
 }

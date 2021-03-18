@@ -3,25 +3,31 @@ const { age, graduation, classType, date } = require('../../lib/utils');
 
 module.exports = {
     index(req, res) {
-        const { filter } = req.query;
-        
-        if ( filter ) {
-            Teacher.findBy(filter, function(teachers) {
+        let { filter, page, limit } = req.query;
+
+        page = page || 1;
+        limit = limit || 2;
+        let offset = limit * (page - 1);
+
+        const params = {
+            filter,
+            limit,
+            offset,
+            callback(teachers) {
+                const pagination = {
+                    selectedPage: page,
+                    totalPages: Math.ceil(teachers[0].total / limit)
+                }
+
                 for (teacher of teachers) {
                     teacher.subjects_taught = teacher.subjects_taught.split(",");
                 }
-    
-                return res.render("teachers/index", { teachers, filter });
-            });
-        } else {
-            Teacher.all(function (teachers) {
-                for (teacher of teachers) {
-                    teacher.subjects_taught = teacher.subjects_taught.split(",");
-                }
-    
-                return res.render("teachers/index", { teachers });
-            });
+
+                return res.render("teachers/index", { teachers, filter, pagination });
+            }
         }
+
+        Teacher.paginate(params);
     },
     create(req, res) {
         return res.render("teachers/create");
@@ -75,11 +81,11 @@ module.exports = {
         }
 
         Teacher.update(req.body, function () {
-            return res.redirect(`/teachers/${ req.body.id }`);
+            return res.redirect(`/teachers/${req.body.id}`);
         });
     },
     delete(req, res) {
-        Teacher.delete(req.body.id, function() {
+        Teacher.delete(req.body.id, function () {
             return res.redirect(`/teachers`);
         });
     },

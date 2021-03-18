@@ -3,9 +3,27 @@ const { date, grade } = require('../../lib/utils');
 
 module.exports = {
     index(req, res) {
-        Student.all(function (students) {
-            return res.render("students/index", { students });
-        });
+        let { filter, page, limit } = req.query;
+
+        page = page || 1;
+        limit = limit || 2;
+        let offset = limit * (page - 1);
+
+        const params = {
+            filter,
+            limit,
+            offset,
+            callback(students) {
+                const pagination = {
+                    selectedPage: page,
+                    totalPages: Math.ceil(students[0].total / limit)
+                }
+
+                return res.render("students/index", { students, filter, pagination });
+            }
+        }
+
+        Student.paginate(params);
     },
     create(req, res) {
         Student.teacherSelectOptions(function(teacherOptions) {
